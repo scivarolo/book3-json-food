@@ -28,7 +28,6 @@ const buildFoodElement = (foodItem, externalDataEls) => {
   } else {
     return buildElement("section", "foodItem", null, itemHeader, itemType, itemEthnicity);
   }
-
 }
 
 /* 
@@ -62,10 +61,8 @@ const fetchOpenFoodData = (localData) => {
       fetch(`https://world.openfoodfacts.org/api/v0/product/${localFoodItem.barcode}.json`).then(response => response.json())
     );
   });
-  console.log(promiseArray);
   return Promise.all(promiseArray);
 }
-
 
 /* 
   Gets data from local API.
@@ -77,7 +74,6 @@ const fetchOpenFoodData = (localData) => {
 fetch('http://localhost:8088/food')
   .then((localFoodData) => localFoodData.json())
   .then((localFoodData) => {
-    console.table(localFoodData);
 
     //Build elements with local data only
     let localOnlyEls = [];
@@ -89,19 +85,21 @@ fetch('http://localhost:8088/food')
     // Loop through Promise array to build out the elements to the DOM
     fetchOpenFoodData(localFoodData)
       .then((promiseArray) => {
-        console.log(promiseArray);
+
         let foodEls = [];
 
         promiseArray.forEach((externalItemData, i) => {
           let externalDataEls = [];
           let localFoodItem = localFoodData[i];
+          
           console.log(`API Data for ${localFoodItem.name}: `, externalItemData);
-          //console.log(`Local Data for ${name}: `, localFoodData[i]);
+
           externalDataEls.push(buildElement("p", null, externalItemData.product.ingredients_text));
           externalDataEls.push(buildElement("p", null, externalItemData.product.countries));
           externalDataEls.push(buildElement("p", null, externalItemData.product.nutriments.energy));
           externalDataEls.push(buildElement("p", null, externalItemData.product.nutriments.fat));
           externalDataEls.push(buildElement("p", null, externalItemData.product.nutriments.sugars));
+          
           foodEls.push(buildFoodElement(localFoodItem, externalDataEls));
         });
         
