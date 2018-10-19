@@ -1,0 +1,58 @@
+{
+  "food": [
+    {
+      "id": 1,
+      "name": "Curly Fries",
+      "type": "Vegetable",
+      "ethnicity": "French",
+      "barcode": "0085239132104"
+    },
+    {
+      "name": "Red Curry Paste",
+      "type": "Curry",
+      "ethnicity": "Thai",
+      "id": 2,
+      "barcode": "0044738201698"
+    },
+    {
+      "id": 3,
+      "name": "Green curry Paste",
+      "type": "Curry",
+      "ethnicity": "Thai",
+      "barcode": "0044738102353"
+    },
+    {
+      "id": 4,
+      "name": "Macaroni and Cheese",
+      "type": "Pasta",
+      "ethnicity": "American",
+      "barcode": "0018894360155"
+    },
+    {
+      "id": 5,
+      "name": "Chocolate Fudge Brownie Ice Cream",
+      "type": "dessert",
+      "ethnicity": "American",
+      "barcode": "8711200562718"
+    },
+    {
+      "name": "Cool Ranch Doritos",
+      "type": "chips",
+      "ethnicity": "American",
+      "id": 7,
+      "barcode": "0028400091510"
+    }
+  ],
+  "drinks": [
+    {
+      "name": "Vanilla Coke",
+      "type": "soda",
+      "id": 1
+    },
+    {
+      "name": "Latte",
+      "type": "coffee",
+      "id": 2
+    }
+  ]
+}
