@@ -1,4 +1,4 @@
-/* 
+/*
   Function to build DOM elements
   Allows other DOM elements to be added as children
 */
@@ -9,7 +9,7 @@ function buildElement(el, cssClass, content, ...children) {
     element.setAttribute("class", cssClass);
   }
   element.innerHTML = content || null;
-  
+
   children.forEach((child) => {
     element.appendChild(child);
   });
@@ -30,9 +30,9 @@ const buildFoodElement = (foodItem, externalDataEls) => {
   }
 }
 
-/* 
+/*
   Loop through food array to combine foodItems into a document fragment.
-  Output the fragment into the specified container in DOM  
+  Output the fragment into the specified container in DOM
 */
 
 const buildFoodGroup = (foodArray, container) => {
@@ -46,8 +46,8 @@ const buildFoodGroup = (foodArray, container) => {
   foodContainer.appendChild(foodGroup);
 }
 
-/* 
-  Fetch food from database and then query the Open Food API 
+/*
+  Fetch food from database and then query the Open Food API
   and get more info about each item.
   https://world.openfoodfacts.org/api/v0/product/[barcode].json
 */
@@ -64,14 +64,14 @@ const fetchOpenFoodData = (localData) => {
   return Promise.all(promiseArray);
 }
 
-/* 
+/*
   Gets data from local API.
   Then builds elements with just local data.
   Then uses local data to query the external API.
   Then builds elements with external data included.
 */
 
-fetch('http://localhost:8088/food')
+fetch("http://localhost:8088/food")
   .then((localFoodData) => localFoodData.json())
   .then((localFoodData) => {
 
@@ -81,7 +81,7 @@ fetch('http://localhost:8088/food')
       localOnlyEls.push(buildFoodElement(foodItem));
     });
     buildFoodGroup(localOnlyEls, "#foodList");
-    
+
     // Loop through Promise array to build out the elements to the DOM
     fetchOpenFoodData(localFoodData)
       .then((promiseArray) => {
@@ -91,7 +91,7 @@ fetch('http://localhost:8088/food')
         promiseArray.forEach((externalItemData, i) => {
           let externalDataEls = [];
           let localFoodItem = localFoodData[i];
-          
+
           console.log(`API Data for ${localFoodItem.name}: `, externalItemData);
 
           externalDataEls.push(buildElement("p", null, externalItemData.product.ingredients_text));
@@ -99,11 +99,11 @@ fetch('http://localhost:8088/food')
           externalDataEls.push(buildElement("p", null, externalItemData.product.nutriments.energy));
           externalDataEls.push(buildElement("p", null, externalItemData.product.nutriments.fat));
           externalDataEls.push(buildElement("p", null, externalItemData.product.nutriments.sugars));
-          
+
           foodEls.push(buildFoodElement(localFoodItem, externalDataEls));
         });
-        
+
         buildFoodGroup(foodEls, "#foodList2");
-      
+
       });
   });
